@@ -41,3 +41,12 @@ make
 sudo make install
 cd ..
 ```
+
+
+Install mongodb:
+I followed this link to install mongodb server:
+https://github.com/uditkarode/void-mongod
+
+
+to install mongosh and mongodb compass I used deb packages downloaded from main mongodb site.
+and extracted with xdeb command
