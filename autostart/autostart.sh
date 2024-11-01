@@ -3,6 +3,7 @@
 
 setxkbmap -layout us,ir -option grp:alt_shift_toggle &
 ~/.fehbg &
+picom &
 #polybar top &
 #polybar top2 &
 /bin/dbus-run-session /usr/bin/pulseaudio &
