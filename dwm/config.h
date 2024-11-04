@@ -3,23 +3,25 @@
 
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 8;
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Departure Mono:size=10" };
-static const char dmenufont[]       = "Departure Mono:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char col_green[]        = "#338822";
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[]          = { "FantasqueSansMono Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "FantasqueSansMono Nerd Font Mono:size=12";
+static const char col_gray1[]       = "#1e1e2f"; // Dark background
+static const char col_gray2[]       = "#2a2a37"; // Slightly lighter background
+static const char col_gray3[]       = "#e0e0e0"; // Light text
+static const char col_gray4[]       = "#ffffff"; // White text
+static const char col_cyan[]        = "#7aa2f7"; // Soft blue for selection
+static const char col_green[]       = "#9ece6a"; // Bright green for accents
+static const char col_red[]         = "#f7768e"; // Soft red for errors
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_green  },
+	// [SchemeUrg]  = { col_red,   col_gray1, col_red    },
 };
 
 /* tagging */
@@ -30,10 +32,10 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "quake",    NULL,       NULL,       0,            1,           -1 },
+	/* class      instance    title       tags mask     iscentered isfloating   monitor */
+	{ "Gimp",     NULL,       NULL,       0,            1,         1,           -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,         0,           -1 },
+	{ "quake",    NULL,       NULL,       0,            1,         1,           -1 },
 };
 
 /* layout(s) */
@@ -63,7 +65,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "tilix", NULL };
+static const char *termcmd[]  = { "st", "-A", "0.7", "-e", "tmux", NULL };
+static const char *quakecmd[]  = { "st", "-A", "0.7", "-c", "quake", "-e", "tmux", NULL };
 static const char *browsercmd[]  = { "google-chrome-stable", NULL };
 static const char *logoutcmd[]  = { "dm-logout", NULL };
 
@@ -72,12 +75,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = quakecmd } },
 	{ MODKEY,                       XK_r,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.02} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.02} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	// { MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
