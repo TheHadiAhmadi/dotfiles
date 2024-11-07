@@ -1,0 +1,87 @@
+#!/bin/bash
+
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+map C edit-config
+
+cmd eval &{{
+    cmd="send $id"
+    for arg; do
+        cmd="$cmd $(eval "printf '%s' \"$arg\"" | sed 's/\\/\\\\/g;s/ /\\ /g;s/"/\\"/g')"
+    done
+    lf -remote "$cmd"
+}}
+
+cmd on-redraw %{{
+    if [ "$lf_width" -le 80 ]; then
+        lf -remote "send $id set ratios 1:2"
+    elif [ "$lf_width" -le 160 ]; then
+        lf -remote "send $id set ratios 1:2:3"
+    else
+        lf -remote "send $id set ratios 1:2:3:5"
+    fi
+}}
+
+cmd toggle-preview %{{
+    if [ "$lf_preview" = true ]; then
+        lf -remote "send $id :set preview false; set ratios 1:5"
+    else
+        lf -remote "send $id :set preview true; set ratios 1:2:3"
+    fi
+}}
+
+map zp toggle-preview
+
+set cursorpreviewfmt "\033[7;90m"
+
+set incfilter
+map f filter
+
+cmap <enter> &{{
+
+    # select and open file
+    if [ "$lf_mode" = filter ]; then
+        lf -remote "send $id :cmd-enter; setfilter; open"
+    else
+        lf -remote "send $id cmd-enter"
+    fi
+}}
+
+cmap <a-n> &{{
+    # go to next file
+    if [ "$lf_mode" = filter ]; then
+        lf -remote "send $id down"
+    fi
+}}
+
+
+cmap <a-p> &{{
+    # go to previous file
+    if [ "$lf_mode" = filter ]; then
+        lf -remote "send $id up"
+    fi
+}}
+
+
+cmd mkdir %{{
+    IFS=" "
+    file="$*"
+    mkdir -p -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+map Md push :mkdir<space>
+
+cmd touch %{{
+    IFS=" "
+    file="$*"
+    touch -- "$file"
+    file="$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id :select \"$file\"; \$\$EDITOR \"$file\""
+}}
+
+map E push $vim<enter>
+

@@ -14,13 +14,13 @@ static const char col_gray1[]       = "#1e1e2f"; // Dark background
 static const char col_gray2[]       = "#2a2a37"; // Slightly lighter background
 static const char col_gray3[]       = "#e0e0e0"; // Light text
 static const char col_gray4[]       = "#ffffff"; // White text
-static const char col_cyan[]        = "#7aa2f7"; // Soft blue for selection
+static const char col_cyan[]        = "#3a72a7"; // Soft blue for selection
 static const char col_green[]       = "#9ece6a"; // Bright green for accents
 static const char col_red[]         = "#f7768e"; // Soft red for errors
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_green  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 	// [SchemeUrg]  = { col_red,   col_gray1, col_red    },
 };
 
@@ -81,13 +81,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.02} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.02} },
-	// { MODKEY,                       XK_space,  zoom,           {0} },
+	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+	// { MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },

@@ -23,6 +23,7 @@ set wrap
 set scrolloff=10
 
 set laststatus=2
+set fileformat=unix
 
 set noswapfile
 
@@ -45,7 +46,8 @@ Plug 'jlcrochet/vim-razor'
 Plug 'nvim-neotest/nvim-nio'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'ryanoasis/vim-devicons'
-
+Plug 'nvim-lua/plenary.nvim'
+Plug 'NeogitOrg/neogit'
 Plug 'sheerun/vim-polyglot'
 Plug 'vito-c/jq.vim'
 
@@ -69,7 +71,7 @@ call plug#end()
 
 
 nnoremap <C-p> :Files<CR>
-nnoremap <C-b> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>b :Buffers<CR>
 
 
@@ -259,6 +261,21 @@ nnoremap <A-L> <C-W><C-L>
 nnoremap <A-H> <C-W><C-H>
 
 
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+
+let g:NERDTreeFileLines = 1
+
+nnoremap <leader>G :Neogit<CR>
+
+nnoremap <F5> :lua require"dap".continue()<CR>
+nnoremap <F10> :lua require"dap".step_over()<CR>
+nnoremap <F11> :lua require"dap".step_into()<CR>
+nnoremap <F12> :lua require"dap".step_out()<CR>
+nnoremap <F9> :lua require"dap".toggle_breakpoint()<CR>
+
+autocmd VimEnter * NERDTree | wincmd p
+
 lua << EOF
 local dap = require('dap')
 
@@ -293,18 +310,5 @@ dap.configurations.cs = {
 }
 
 dap.configurations.razor = dap.configurations.razor
+
 EOF
-
-nnoremap <F5> :lua require"dap".continue()<CR>
-nnoremap <F10> :lua require"dap".step_over()<CR>
-nnoremap <F11> :lua require"dap".step_into()<CR>
-nnoremap <F12> :lua require"dap".step_out()<CR>
-nnoremap <F9> :lua require"dap".toggle_breakpoint()<CR>
-
-
-autocmd VimEnter * NERDTree | wincmd p
-
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
-
-let g:NERDTreeFileLines = 1
