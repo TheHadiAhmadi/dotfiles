@@ -10,13 +10,13 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "FantasqueSansMono Nerd Font Mono:size=12" };
 static const char dmenufont[]       = "FantasqueSansMono Nerd Font Mono:size=12";
-static const char col_gray1[]       = "#1e1e2f"; // Dark background
-static const char col_gray2[]       = "#2a2a37"; // Slightly lighter background
-static const char col_gray3[]       = "#e0e0e0"; // Light text
-static const char col_gray4[]       = "#ffffff"; // White text
-static const char col_cyan[]        = "#3a72a7"; // Soft blue for selection
-static const char col_green[]       = "#9ece6a"; // Bright green for accents
-static const char col_red[]         = "#f7768e"; // Soft red for errors
+static const char col_gray1[]       = "#282828"; // Dark background
+static const char col_gray2[]       = "#222222"; // Slightly lighter background
+static const char col_gray3[]       = "#a89984"; // Light text
+static const char col_gray4[]       = "#ebdbb2"; // White text
+static const char col_cyan[]        = "#458588"; // Soft blue for selection
+static const char col_green[]       = "#98971a"; // Bright green for accents
+static const char col_red[]         = "#cc241d"; // Soft red for errors
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -106,8 +106,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,           {.v = logoutcmd} },
+	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,           {.v = logoutcmd} },
 	{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
 	{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
 	{ 0, XF86XK_AudioMute,        spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },

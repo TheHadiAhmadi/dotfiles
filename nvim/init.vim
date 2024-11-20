@@ -1,4 +1,3 @@
-set number 
 set relativenumber
 
 set clipboard=unnamedplus
@@ -35,7 +34,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Example plugins
 Plug 'tpope/vim-sensible'  " A set of sensible defaults
+Plug 'leafgarland/typescript-vim'
 Plug 'tpope/vim-commentary'  " A set of sensible defaults
+Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }  " Fuzzy file finder
 Plug 'junegunn/fzf.vim'    " FZF integration for Vim
 Plug 'hrsh7th/nvim-cmp'                 " Autocompletion plugin
@@ -50,6 +51,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'NeogitOrg/neogit'
 Plug 'sheerun/vim-polyglot'
 Plug 'vito-c/jq.vim'
+Plug 'airblade/vim-gitgutter'
 
 Plug 'pangloss/vim-javascript'
 Plug 'joshdick/onedark.vim'
@@ -58,7 +60,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'preservim/nerdtree'
-" Plug 'preservim/tagbar'
+" Plug 'preservim/vimux'
 " Plug 'glepnir/dashboard-nvim'
 
 Plug 'neoclide/coc.nvim'
@@ -70,12 +72,13 @@ Plug 'jbyuki/one-small-step-for-vimkind'
 call plug#end()
 
 
-nnoremap <C-p> :Files<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>b :Buffers<CR>
+nnoremap <space>s :Files<CR>
+nnoremap <space>d :NERDTreeToggle<CR>
+nnoremap <space>f :Rg<CR>
+nnoremap <space>a :Buffers<CR>
 
 
-colorscheme onedark
+colorscheme gruvbox
 
 set nobackup
 set nowritebackup
@@ -218,7 +221,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
@@ -226,7 +229,7 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item
@@ -236,8 +239,9 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 
-" set foldmethod=indent
-" set nofoldenable
+set foldmethod=indent
+set foldcolumn=2
+set nofoldenable
 set colorcolumn=100
 set textwidth=100
 set cursorline
@@ -255,10 +259,10 @@ inoremap <A-K> <C-\><C-N><C-w>k
 inoremap <A-L> <C-\><C-N><C-w>l
 inoremap <A-H> <C-\><C-N><C-w>h
 
-nnoremap <A-J> <C-W><C-J>
-nnoremap <A-K> <C-W><C-K>
-nnoremap <A-L> <C-W><C-L>
-nnoremap <A-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 
 " Close the tab if NERDTree is the only window remaining in it.
@@ -266,49 +270,29 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 
 let g:NERDTreeFileLines = 1
 
-nnoremap <leader>G :Neogit<CR>
+nnoremap <space>G :Neogit<CR>
 
-nnoremap <F5> :lua require"dap".continue()<CR>
-nnoremap <F10> :lua require"dap".step_over()<CR>
-nnoremap <F11> :lua require"dap".step_into()<CR>
-nnoremap <F12> :lua require"dap".step_out()<CR>
-nnoremap <F9> :lua require"dap".toggle_breakpoint()<CR>
+" autocmd VimEnter * NERDTree | wincmd p
 
-autocmd VimEnter * NERDTree | wincmd p
 
-lua << EOF
-local dap = require('dap')
+let g:NERDTreeMouseMode=2
 
--- .NET Core debugger setup
-dap.adapters.coreclr = {
-  type = 'executable',
-  command = '/home/hadi/Downloads/netcoredbg/netcoredbg',
-  args = { '--interpreter=vscode' }
-}
 
-dap.configurations.cs = {
-  {
-    name = 'Launch',
-    type = 'coreclr',
-    request = 'launch',
-    preLaunchTask = 'build',
-    program = function()
-      return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/net8.0/', 'file')
-    end,
-    args = {},
-    cwd = '${workspaceFolder}',
-    stopAtEntry = false,
-    serverReadyAction = {
-      action = 'openTerminal',
-      pattern = 'Now listening on:',
-      uriFormat = 'http://localhost:%s',
-      variables = {
-        port = 'PORT',
-      },
-    },
-  },
-}
+" Snippets
+nnoremap ,script i<script lang="ts"><CR><CR></script><ESC>k$a<TAB>let { children } = $props()<ESC>F{2lvw2h
 
-dap.configurations.razor = dap.configurations.razor
 
-EOF
+" Vim
+nmap <space>q :wq<cr>
+
+
+" Git
+
+nmap <space>gb :Git blame<cr>
+nmap <space>gs :Git<cr>
+nmap <space>gc :Git commit -v<cr>
+nmap <space>ga :Git add -p<cr>
+nmap <space>gm :Gcommit --amend<cr>
+nmap <space>gp :Gpush<cr>
+nmap <space>gd :Gvdiff<cr>
+nmap <space>gw :Gwrite<cr>
