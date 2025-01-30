@@ -1,9 +1,14 @@
 #!/usr/bin/bash
 
+while true; do
+    xsetroot -name "$(acpi -b | awk '{print $4}' | tr -d ',%')% - $(date '+%Y-%m-%d - %H:%M')"
+    sleep 10
+done &
 
 setxkbmap -layout us,ir -option grp:alt_shift_toggle &
 ~/.fehbg &
 picom &
+xfce4-power-manager &
 #polybar top &
 #polybar top2 &
 /bin/dbus-run-session /usr/bin/pulseaudio &

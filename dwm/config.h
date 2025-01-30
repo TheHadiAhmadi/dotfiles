@@ -67,6 +67,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", "-A", "0.7", "-e", "tmux", NULL };
 static const char *quakecmd[]  = { "st", "-A", "0.7", "-c", "quake", "-e", "tmux", NULL };
+static const char *screenshot[]  = { "flameshot", "gui", NULL };
 static const char *browsercmd[]  = { "google-chrome-stable", NULL };
 static const char *logoutcmd[]  = { "dm-logout", NULL };
 
@@ -76,6 +77,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = quakecmd } },
+	{ MODKEY,                       XK_s,      spawn,      {.v = screenshot } },
 	{ MODKEY,                       XK_r,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

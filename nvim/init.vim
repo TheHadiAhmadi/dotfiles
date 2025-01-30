@@ -292,7 +292,7 @@ nmap <space>gb :Git blame<cr>
 nmap <space>gs :Git<cr>
 nmap <space>gc :Git commit -v<cr>
 nmap <space>ga :Git add -p<cr>
-nmap <space>gm :Gcommit --amend<cr>
-nmap <space>gp :Gpush<cr>
+nmap <space>gm :Git commit --amend<cr>
+nmap <space>gp :Git push<cr>
 nmap <space>gd :Gvdiff<cr>
 nmap <space>gw :Gwrite<cr>
