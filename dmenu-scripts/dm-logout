@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# dmenu theming
+. $HOME/.bin/dmenu-theming
+lines="-l 4"
+
+first_prompt="Exit?"
+opt1="Logout\nRestart\nPoweroff\nCancel"
+opt2="Yes\nNo"
+
+
+ask() {
+    answer="$( echo -e $1 | dmenu -i -p "$2" $lines $colors $font )"
+}
+
+ask "$opt1" "$first_prompt"
+
+case $answer in
+    "Logout")
+        ask "$opt2" "Are you sure to logout?"
+        if [[ $answer == "Yes" ]]; then
+            i3-msg exit
+        fi
+        exit 0
+        ;;
+    "Restart")
+        ask "$opt2" "Are you sure to restart?"
+        if [[ $answer == "Yes" ]]; then
+            systemctl reboot
+        fi
+        exit 0
+        ;;
+    "Poweroff")
+        ask "$opt2" "Are you sure to poweroff?"
+        if [[ $answer == "Yes" ]]; then
+            systemctl poweroff
+        fi
+        exit 0
+        ;;
+esac
+
+exit 0

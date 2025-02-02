@@ -1,4 +1,6 @@
 dwm/dwm.o
+dwm/drw.o
+dwm/util.o
 dwm/dwm
 st/st.o
 st/st
