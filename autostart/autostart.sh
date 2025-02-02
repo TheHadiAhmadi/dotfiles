@@ -8,6 +8,7 @@ done &
 setxkbmap -layout us,ir -option grp:alt_shift_toggle &
 ~/.fehbg &
 picom &
+dunst &
 xfce4-power-manager &
 #polybar top &
 #polybar top2 &

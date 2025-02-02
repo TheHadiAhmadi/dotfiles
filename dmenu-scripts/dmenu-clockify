@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+echo clockify
+
+# Get user input for action
+choice=$(echo -e "Start Timer\nStop Timer\nShow Current\nList Projects" | dmenu -i -p "Clockify:")
+
+case "$choice" in
+    "Start Timer")
+        task=$(echo "" | dmenu -p "Task Name:")
+        if [ -n "$task" ]; then
+            clockify-cli start "$task"
+            notify-send "Clockify" "Started: $task"
+        fi
+        ;;
+    "Stop Timer")
+        clockify-cli stop
+        notify-send "Clockify" "Stopped Timer"
+        ;;
+    "Show Current")
+        current=$(clockify-cli status)
+        notify-send "Clockify" "$current"
+        ;;
+    "List Projects")
+        projects=$(clockify-cli project list | dmenu -l 10 -i -p "Select Project:")
+        notify-send "Clockify" "Project: $projects"
+        ;;
+esac
