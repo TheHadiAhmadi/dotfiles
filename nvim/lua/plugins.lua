@@ -1,0 +1,26 @@
+return {
+  { 'junegunn/fzf.vim' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-buffer' },
+  { 'hrsh7th/cmp-path' },
+  { 'jlcrochet/vim-razor' },
+  { 'nvim-neotest/nvim-nio' },
+  { 'rcarriga/nvim-dap-ui' },
+  { 'nvim-lua/plenary.nvim' },
+  { 'NeogitOrg/neogit' },
+  { 'sheerun/vim-polyglot' },
+  { 'vito-c/jq.vim' },
+  { 'airblade/vim-gitgutter' },
+  { 'pangloss/vim-javascript' },
+  { 'joshdick/onedark.vim' },
+  { 'ryanoasis/vim-devicons' },
+  { 'tpope/vim-fugitive' },
+  { 'nvim-tree/nvim-tree.lua' },
+  { 'preservim/nerdtree' },
+  { 'vim-airline/vim-airline' },
+  { 'mfussenegger/nvim-dap' },
+  { 'nvim-telescope/telescope-dap.nvim' },
+  { 'jbyuki/one-small-step-for-vimkind' },
+}
+
+
