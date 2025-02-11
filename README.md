@@ -4,12 +4,12 @@
 void linux packages:
 <!-- system -->
 ```
-base-system binutils curl dhclient elogind git htop noto-fonts-ttf tree jq pulseaudio pavucontrol-qt xz unzip wget 
+base-system binutils curl dhclient elogind git htop noto-fonts-ttf tree jq pulseaudio pavucontrol-qt xz unzip wget openssh-server
 ```
 
 <!-- wm related -->
 ```
-arandr dmenu dunst feh flameshot fzf neovim polybar ranger sxhkd sxiv xclip tilix zsh
+arandr dmenu dunst feh flameshot fzf neovim polybar ranger sxhkd sxiv xclip tilix zsh ripgrep tree gparted 
 ```
 
 <!-- build -->
