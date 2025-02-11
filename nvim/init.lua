@@ -37,9 +37,9 @@ vim.opt.shortmess:append("c")
 vim.opt.signcolumn = "yes"
 
 vim.api.nvim_set_keymap('n', '<space>s', ':Files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>d', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<space>d', ':Neotree reveal position=left<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<space>D', ':Neotree toggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>f', ':Rg<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>a', ':Buffers<CR>', { noremap = true, silent = true })
 
 -- Set colorscheme
 vim.cmd('colorscheme gruvbox')
@@ -84,4 +84,4 @@ vim.api.nvim_set_keymap('n', '<space>gp', ':Git push<CR>', { noremap = true, sil
 vim.api.nvim_set_keymap('n', '<space>gd', ':Gvdiff<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>gw', ':Gwrite<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', "<C-j>", ":rightbelow vsp term://$SHELL<CR>i", {noremap = true, silent= true})
+vim.api.nvim_set_keymap('n', "<space>j", ":rightbelow vsp term://$SHELL<CR>i", {noremap = true, silent= true})

@@ -51,13 +51,33 @@ function trigger_ai()
     end
 end
 
+function close_ai()
+    -- close buffer with title '>>> AI chat'
+    local buffers = vim.api.nvim_list_bufs()
+    
+    -- Iterate through each buffer
+    for _, buf in ipairs(buffers) do
+        -- Get the name of the buffer
+        local name = vim.api.nvim_buf_get_name(buf)
+
+        -- Check if the buffer name matches '>>> AI chat'
+        if name:match(">>> AI chat") then
+            -- Close the buffer if it matches
+            vim.api.nvim_buf_delete(buf, { force = true })
+            print("Closed buffer: " .. name)
+            return
+        end
+    end
+
+end
+
 return {
   'madox2/vim-ai',
   opts = {
     options = {
-      -- model = "openai/gpt-4o-mini",
+      model = "openai/gpt-4o-mini",
       -- model = "deepseek/deepseek-r1-distill-llama-8b",
-      model = "deepseek/deepseek-chat:free",
+      -- model = "deepseek/deepseek-chat:free",
       endpoint_url = "https://openrouter.ai/api/v1/chat/completions",
     }
   },
@@ -72,8 +92,10 @@ return {
     vim.api.nvim_set_keymap('n', '<space>t', ':AIC ', { noremap = true, silent = true })
     vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AI ", { noremap = true, silent = true })
     vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AIC /right<CR>", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("i", "<C-l>", "<esc>:lua trigger_ai()<CR>", {noremap = true, silent = true})
-    vim.api.nvim_set_keymap("n", "<C-l>", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
-    vim.api.nvim_set_keymap('v', "<C-l>", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
+
+    vim.api.nvim_set_keymap('n', "<space>o", ":lua close_ai()<CR>", {noremap = true, silent = true})
+
+    vim.api.nvim_set_keymap("n", "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('v', "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
   end
 }
