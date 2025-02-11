@@ -35,6 +35,7 @@ ln -s $PWD/polybar ~/.config/polybar
 ln -s $PWD/nvim ~/.config/nvim
 ln -s $PWD/ranger ~/.config/ranger
 ln -s $PWD/sxhkd ~/.config/sxhkd
+ln -s $PWD/zshrc ~/.config/zshrc
 
 cd dwm
 make
@@ -43,7 +44,24 @@ cd ..
 ```
 
 
-Install mongodb:
+install oh-my-zsh then:
+Edit ~/.zshrc and add following text:
+```
+export CLOCKIFY_API_KEY=...
+export CLOCKIFY_WORKSPACE_ID=...
+export CLOCKIFY_USER_ID=...
+export OPENAI_BASE_URL=...
+export OPENAI_API_KEY=...
+
+export OPENCTI_PASSWORD=...
+
+source ~/.config/zshrc
+
+```
+
+
+
+Install mongodb in void linux:
 I followed this link to install mongodb server:
 https://github.com/uditkarode/void-mongod
 
