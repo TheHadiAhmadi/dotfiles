@@ -2,7 +2,5 @@ dwm/dwm.o
 dwm/drw.o
 dwm/util.o
 dwm/dwm
-st/st.o
-st/st
 ranger/plugins/__pycache__
 dmenu-scripts/clockify/.env
