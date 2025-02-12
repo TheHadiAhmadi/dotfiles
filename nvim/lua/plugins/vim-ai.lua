@@ -93,7 +93,7 @@ return {
     vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AI ", { noremap = true, silent = true })
     vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AIC /right<CR>", { noremap = true, silent = true })
 
-    vim.api.nvim_set_keymap('n', "<space>o", ":lua close_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', "<space><S-l>", ":lua close_ai()<CR>", {noremap = true, silent = true})
 
     vim.api.nvim_set_keymap("n", "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
     vim.api.nvim_set_keymap('v', "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
