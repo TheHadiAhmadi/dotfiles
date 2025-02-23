@@ -84,6 +84,7 @@ void draw(void);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
+void iso14755(const Arg *);
 void toggleprinter(const Arg *);
 
 int tattrset(int);

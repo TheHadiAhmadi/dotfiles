@@ -4,3 +4,4 @@ dwm/util.o
 dwm/dwm
 ranger/plugins/__pycache__
 dmenu-scripts/clockify/.env
+dmenu-scripts/clockify/node_modules

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Path to the models configuration file
+MODELS_FILE="$HOME/.bin/ai_models.conf"
+
+# Get current model
+CURRENT_MODEL=$(grep -o '^export OPENAI_MODEL=.*' ~/.zshrc | cut -d'=' -f2)
+
+# Select model using dmenu
+selected_model=$(cat "$MODELS_FILE" | dmenu -i -p "Select AI Model:" -l 10)
+
+if [ -n "$selected_model" ]; then
+    # Update .zshrc
+    sed -i '/^export OPENAI_MODEL=/d' ~/.zshrc
+    echo "export OPENAI_MODEL=$selected_model" >> ~/.zshrc
+    
+    # Export the new model in current session
+    export OPENAI_MODEL="$selected_model"
+    
+    # Notify user
+    notify-send "AI Model Changed" "Now using: $selected_model, You need to re-open your application to take effect"
+fi
+

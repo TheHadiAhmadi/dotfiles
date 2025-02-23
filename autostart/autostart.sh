@@ -7,6 +7,7 @@ done &
 
 setxkbmap -layout us,ir -option grp:alt_shift_toggle &
 ~/.fehbg &
+~/.bin/clockify-dashboard &
 picom &
 dunst &
 xfce4-power-manager &

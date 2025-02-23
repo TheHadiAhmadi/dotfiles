@@ -1,5 +1,5 @@
 # dmenu theming
 lines="-l 15"
-font="-fn LiberationMono-12"
+font="-fn D2CodingLigatureNerdFont-12"
 colors="-sb #458588 -nf #a89984 -nb #222222 -sf #ebdbb2"
 

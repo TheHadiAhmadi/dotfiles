@@ -75,7 +75,7 @@ return {
   'madox2/vim-ai',
   opts = {
     options = {
-      model = "openai/gpt-4o-mini",
+      model = os.getenv("OPENAI_MODEL"),
       -- model = "deepseek/deepseek-r1-distill-llama-8b",
       -- model = "deepseek/deepseek-chat:free",
       endpoint_url = "https://openrouter.ai/api/v1/chat/completions",
@@ -88,14 +88,15 @@ return {
 
     vim.g.vim_ai_roles_config_file = '~/.config/nvim/ai-rules.ini'
 
-    vim.api.nvim_set_keymap('n', '<space>i', ':AI ', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<space>t', ':AIC ', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AI ", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AIC /right<CR>", { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap('n', '<space>i', ':AI ', { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap('n', '<space>t', ':AIC ', { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AI ", { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap('v', '<space>t', "<,'>:AIC /right<CR>", { noremap = true, silent = true })
 
-    vim.api.nvim_set_keymap('n', "<space><S-l>", ":lua close_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', "<C-o>", ":lua close_ai()<CR>", {noremap = true, silent = true})
 
-    vim.api.nvim_set_keymap("n", "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
-    vim.api.nvim_set_keymap('v', "<space>l", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap("n", "<C-l>", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('v', "<C-l>", ":lua trigger_ai()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('i', "<C-l>", "<Esc>:lua trigger_ai()<CR>", {noremap = true, silent = true})
   end
 }

@@ -19,7 +19,7 @@ case $answer in
     "Logout")
         ask "$opt2" "Are you sure to logout?"
         if [[ $answer == "Yes" ]]; then
-            i3-msg exit
+            killall dwm
         fi
         exit 0
         ;;

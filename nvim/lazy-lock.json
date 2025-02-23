@@ -23,7 +23,7 @@
   "nvim-window-picker": { "branch": "main", "commit": "0dfef64eaf063e1cd27983ab11a30e7bc5b74fac" },
   "one-small-step-for-vimkind": { "branch": "main", "commit": "b9def31568d20b16f7da9479a4174d165046fe8a" },
   "onedark.vim": { "branch": "main", "commit": "390b893d361c356ac1b00778d849815f2aa44ae4" },
-  "plenary.nvim": { "branch": "master", "commit": "3707cdb1e43f5cea73afb6037e6494e7ce847a66" },
+  "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "telescope-dap.nvim": { "branch": "master", "commit": "783366bd6c1e7fa0a5c59c07db37f49c805a28df" },
   "typescript-vim": { "branch": "master", "commit": "4740441db1e070ef8366c888c658000dd032e4cb" },
   "vim-ai": { "branch": "main", "commit": "91a0373caf53bb775c3487892255f82902b3e1ba" },
@@ -35,5 +35,6 @@
   "vim-javascript": { "branch": "master", "commit": "c470ce1399a544fe587eab950f571c83cccfbbdc" },
   "vim-polyglot": { "branch": "master", "commit": "f5393cfee07aeb666f4d75f9b3a83163862fb094" },
   "vim-razor": { "branch": "master", "commit": "305dd1db88c657c0c02effbee1a88048479bb0c4" },
-  "vim-sensible": { "branch": "master", "commit": "0ce2d843d6f588bb0c8c7eec6449171615dc56d9" }
+  "vim-sensible": { "branch": "master", "commit": "0ce2d843d6f588bb0c8c7eec6449171615dc56d9" },
+  "vls": { "branch": "master", "commit": "dd8c00497c8de79f939e26795f7115332d2347b6" }
 }

@@ -8,8 +8,9 @@ static const unsigned int gappx     = 8;
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "FantasqueSansMono Nerd Font Mono:size=12" };
-static const char dmenufont[]       = "FantasqueSansMono Nerd Font Mono:size=12";
+static const char *fonts[]          = { "D2CodingLigature Nerd Font:size=12:style=Bold:antialias=true:autohint=true" };
+// static const char *fonts[]          = { "FantasqueSansMono Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "D2CodingLigature Nerd Font:size=12:style=Bold:antialias=true:autohint=true";
 static const char col_gray1[]       = "#282828"; // Dark background
 static const char col_gray2[]       = "#222222"; // Slightly lighter background
 static const char col_gray3[]       = "#a89984"; // Light text
@@ -71,9 +72,10 @@ static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
 // -A 0.7
 static const char *quakecmd[]  = { "st", "-c", "quake", "-e", "tmux", NULL };
 static const char *screenshot[]  = { "flameshot", "gui", NULL };
-static const char *browsercmd[]  = { "google-chrome-stable", NULL };
+static const char *browsercmd[]  = { "google-chrome", NULL };
 static const char *logoutcmd[]  = { "/home/hadi/.bin/dm-logout", NULL };
 static const char *killcmd[]  = { "/home/hadi/.bin/dmenu-kill-process", NULL };
+static const char *amscmd[]  = { "/home/hadi/.bin/ai-model-switch", NULL };
 static const char *searchcmd[]  = { "/home/hadi/.bin/dmenu-websearch", NULL };
 static const char *clockifycmd[]  = { "node", "/home/hadi/.bin/clockify/index.js", NULL };
 
@@ -81,6 +83,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_q,      spawn,          {.v = killcmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_a,      spawn,          {.v = amscmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = clockifycmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },

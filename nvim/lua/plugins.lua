@@ -19,6 +19,7 @@ return {
   { 'preservim/nerdtree' },
   { 'vim-airline/vim-airline' },
   { 'mfussenegger/nvim-dap' },
+  { 'vlang/vls' },
   { 'nvim-telescope/telescope-dap.nvim' },
   { 'jbyuki/one-small-step-for-vimkind' },
 }

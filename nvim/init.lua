@@ -72,7 +72,16 @@ vim.api.nvim_set_keymap("n", "<leader><S-f>", "<Plug>(coc-format)", {})
 
 
 -- Vim
-vim.api.nvim_set_keymap('n', '<space>q', ':wq<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<space>q', ':lua save_and_quit()<CR>', { noremap = true, silent = true })
+
+function save_and_quit()
+    if vim.bo.modifiable then
+        vim.cmd('wq')
+    else
+        print("Cannot write to this file.")
+        vim.cmd('q')
+    end
+end
 
 -- Git
 vim.api.nvim_set_keymap('n', '<space>gb', ':Git blame<CR>', { noremap = true, silent = true })
@@ -84,7 +93,7 @@ vim.api.nvim_set_keymap('n', '<space>gp', ':Git push<CR>', { noremap = true, sil
 vim.api.nvim_set_keymap('n', '<space>gd', ':Gvdiff<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>gw', ':Gwrite<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', "<space>j", ":rightbelow vsp term://$SHELL<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-j>", ":rightbelow vsp term://$SHELL<CR>i", { noremap = true, silent = true })
 
 
 --- Clockify
@@ -236,4 +245,9 @@ vim.api.nvim_set_keymap("n", "<space>cc", ":lua start_timer()<CR>", {noremap = t
 vim.api.nvim_set_keymap("n", "<space>cs", ":lua stop_timer()<CR>", {noremap = true, silent=true})
 vim.api.nvim_set_keymap("n", "<space>c", ":lua get_current_timer()<CR>", {noremap = true, silent=true})
 
+
+vim.api.nvim_set_keymap("n", "<space>h", "<C-w>h", {noremap= true, silent= true})
+vim.api.nvim_set_keymap("n", "<space>j", "<C-w>j", {noremap= true, silent= true})
+vim.api.nvim_set_keymap("n", "<space>k",  "<C-w>k", {noremap= true, silent= true})
+vim.api.nvim_set_keymap("n", "<space>l",  "<C-w>l", {noremap= true, silent= true})
 

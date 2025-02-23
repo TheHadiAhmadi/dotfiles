@@ -104,6 +104,10 @@ async function startTimer() {
 
 }
 
+async function dashboard() {
+    execSync('~/.bin/clockify-dashboard')
+}
+
 async function stopTimer() {
     try {
     const url = `/workspaces/${CLOCKIFY_WORKSPACE_ID}/user/${CLOCKIFY_USER_ID}/time-entries?in-progress=true`;
@@ -159,6 +163,7 @@ async function main() {
   const options = [
     "Start Timer",
     "Stop Timer",
+    "Dashboard",
     "Show Status",
     // "List Projects",
     "Exit"
@@ -168,6 +173,9 @@ async function main() {
   switch (choice) {
     case "Start Timer":
       await startTimer();
+      break;
+    case "Dashboard":
+      await dashboard();
       break;
     case "Stop Timer":
       await stopTimer();
