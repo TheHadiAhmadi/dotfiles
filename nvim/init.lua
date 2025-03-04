@@ -93,8 +93,47 @@ vim.api.nvim_set_keymap('n', '<space>gp', ':Git push<CR>', { noremap = true, sil
 vim.api.nvim_set_keymap('n', '<space>gd', ':Gvdiff<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>gw', ':Gwrite<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', "<C-j>", ":rightbelow vsp term://$SHELL<CR>i", { noremap = true, silent = true })
 
+function toggle_terminal()
+    -- Get the list of buffers
+    local buffers = vim.api.nvim_list_bufs()
+    local terminal_buf = nil
+
+    -- Check if there is an existing terminal buffer
+    for _, buf in ipairs(buffers) do
+        if vim.api.nvim_buf_get_option(buf, 'buftype') == 'terminal' then
+            terminal_buf = buf
+            break
+        end
+    end
+
+    if terminal_buf and vim.api.nvim_buf_is_loaded(terminal_buf) then
+        -- If the terminal buffer exists and is loaded
+        local win_id = vim.fn.bufwinid(terminal_buf)
+        local height = vim.api.nvim_win_get_height(win_id)
+            if height > 3 then
+                -- activate code buffer
+                vim.cmd("normal! \\<C-w>k")
+                vim.api.nvim_win_set_height(win_id, 3)
+            else
+                vim.api.nvim_win_set_height(win_id, 30)
+            end
+
+        if win_id ~= -1 then
+            -- If the terminal is already open, just focus on it
+            vim.api.nvim_set_current_win(win_id)
+        else
+            -- If the terminal is not focused, bring it to focus
+            vim.cmd("normal! \\<C-w>w")
+        end
+    else
+        -- If terminal buffer does not exist, create a new one
+        vim.cmd("rightbelow split | terminal")
+    end
+end
+
+-- Set the key mapping
+vim.api.nvim_set_keymap('n', '<C-j>', ':lua toggle_terminal()<CR>', { noremap = true, silent = true })
 
 --- Clockify
 local api_key = os.getenv("CLOCKIFY_API_KEY")  -- Set this environment variable with your Clockify API key

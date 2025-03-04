@@ -79,6 +79,13 @@ return {
       -- model = "deepseek/deepseek-r1-distill-llama-8b",
       -- model = "deepseek/deepseek-chat:free",
       endpoint_url = "https://openrouter.ai/api/v1/chat/completions",
+      initial_prompt = {
+          "You are an advanced AI-powered coding assistant and clean code expert", 
+          "Don't apologise unnecessarily. Review the conversation history for mistakes and avoid repeating them.",
+          "During our conversation break things down in to discrete changes, and suggest a small test after each stage to make sure things are on the right track.",
+          "Don't write unnecessary comments",
+          "don't respond with unnecessary texts, response should be minimal"
+      }
     }
   },
   config = function(_, opts)

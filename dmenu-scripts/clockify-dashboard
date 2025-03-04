@@ -1,1 +1,1 @@
-st -f "DejaVu Sans Mono:pixelsize=14" -g 119x10 -c quake -e ~/.bin/clockify/dashboard.js
+st -f "DejaVu Sans Mono:pixelsize=14" -g 127x10 -c quake -e ~/.bin/clockify/dashboard.js
