@@ -1,6 +1,7 @@
 require("config.lazy")
 
-vim.opt.relativenumber = true
+vim.opt.number = true
+-- vim.opt.relativenumber = true
 
 vim.opt.clipboard = "unnamedplus"
 

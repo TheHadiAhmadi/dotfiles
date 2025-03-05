@@ -62,8 +62,8 @@ async function fetchData() {
   }
 }
 
-function timeToString(hours) { 
-  if (typeof hours !== 'number') {
+function timeToString(hours = 0) {
+  if (typeof hours !== "number") {
     return "Invalid input: Hours must be a number.";
   }
 
@@ -73,16 +73,14 @@ function timeToString(hours) {
 
   const hh = Math.floor(hours); // Get the integer part for hours
   const mm = Math.round((hours - hh) * 60); // Calculate minutes from the decimal part and round
-  const hhString = String(hh).padStart(2, '0'); // Format hours with leading zero if needed
-  const mmString = String(mm).padStart(2, '0'); // Format minutes with leading zero if needed
+  const hhString = String(hh).padStart(2, "0"); // Format hours with leading zero if needed
+  const mmString = String(mm).padStart(2, "0"); // Format minutes with leading zero if needed
 
   return `${hhString}:${mmString}`;
-
 }
 
 function minutesToString(hours) {
-    return timeToString(hours).split(':')[1]
-
+  return timeToString(hours).split(":")[1];
 }
 
 async function run() {
@@ -171,8 +169,8 @@ async function run() {
   const average2 = totalHours2 / today;
 
   process.stdout.write("\n");
-  const avg1 = timeToString(average1)
-  const avg2 = timeToString(average2)
+  const avg1 = timeToString(average1);
+  const avg2 = timeToString(average2);
 
   const client1 = "Ubeac";
   const client2 = "Armin";
@@ -227,19 +225,34 @@ async function run() {
     }
   }
   message2 += end2;
-            const green = "\x1b[38;2;80;200;80m";
-            const red = "\x1b[38;2;200;80;80m";
-            const white = "\x1b[38;2;200;200;200m";
+  const green = "\x1b[38;2;80;200;80m";
+  const red = "\x1b[38;2;200;80;80m";
+  const white = "\x1b[38;2;200;200;200m";
 
-    const remainingHours = ((((goal1 + goal2) * today) - ((totalHours + totalHours2) * 100)) / 100) * 100 / (totalDaysInMonth - today) 
+  const remainingHours =
+    ((((goal1 + goal2) * today - (totalHours + totalHours2) * 100) / 100) *
+      100) /
+    (totalDaysInMonth - today);
 
-    const messageFooter = `Should Work (${timeToString((remainingHours + goal1 + goal2) / 100)}) Everyday` 
-    const footer = `Goal (${timeToString((goal1 + goal2) / 100)}) Current (${timeToString((totalHours + totalHours2) / today)}) ${messageFooter}`
+    const todayDateKey = moment(new Date())
+      .format("YYYY-MM-DD"); // Extract date in 'YYYY-MM-DD' format
+
+let todayHours = (dailyProjectData[todayDateKey] ?? 0) + (dailyProjectData2[todayDateKey] ?? 0)
+
+
+  const messageFooter = `Should Work (${timeToString(
+    (remainingHours + goal1 + goal2) / 100
+  )}) Everyday`;
+    const footer = `Daily Goal: ${timeToString(
+    (goal1 + goal2) / 100
+  )} Current: ${timeToString(
+    (totalHours + totalHours2) / today
+  )} | Today: (${timeToString(todayHours)} / ${timeToString(((remainingHours + goal1 + goal2) / 100 )- todayHours)}) | ${messageFooter}`;
   for (let i = 9; i > 0; i--) {
     process.stdout.write(white);
 
     if (i == 9) {
-      for (let j = 0; j < 4 * totalDaysInMonth + 3; j++) {
+      for (let j = 0; j < 4 * totalDaysInMonth + 5; j++) {
         process.stdout.write("\u2588");
       }
       process.stdout.write("\n");
@@ -248,52 +261,72 @@ async function run() {
     process.stdout.write("\u2588");
     if (i == 8) {
       process.stdout.write(message1);
-      process.stdout.write("\u2588");
+      process.stdout.write(" \u2588");
       process.stdout.write(message2);
-      process.stdout.write("\u2588");
+      process.stdout.write(" \u2588");
       process.stdout.write("\n");
     } else {
       for (let key in map) {
         const today = new Date().getDate();
-          const color = map[key] > goal1/100 ? green : red
-        if (key.endsWith("-" + today)) {
+        const color = map[key] > goal1 / 100 ? green : red;
+        const keyIsToday = key.endsWith("-" + String(today).padStart(2, "0"));
+        const keyIsTomorrow = key.endsWith("-" + String(+today + 1).padStart(2, "0"));
+        if (keyIsToday) {
           process.stdout.write("︙");
         } else {
           // process.stdout.write(' ');
         }
         if (i - map[key] > 0 && i - map[key] < 1) {
-            process.stdout.write(color)
+          process.stdout.write(color);
           process.stdout.write(minutesToString(map[key]));
-            process.stdout.write(white)
+          process.stdout.write(white);
         } else {
           if (map[key] > i) {
             process.stdout.write(color);
-            process.stdout.write("██" + white);
+            if (keyIsTomorrow) {
+              process.stdout.write("█" + white);
+            } else {
+              process.stdout.write("██" + white);
+            }
           } else {
-            process.stdout.write("  ");
+            if (keyIsTomorrow) {
+              process.stdout.write(" ");
+            } else {
+              process.stdout.write("  ");
+            }
           }
         }
       }
       process.stdout.write("\u2588");
       for (let key in map2) {
-          const color = map2[key] > goal1/100 ? green : red
+        const color = map2[key] > goal2 / 100 ? green : red;
         // 2.3 10x 9x 3(i - x) < 1
         const today = new Date().getDate();
-        if (key.endsWith("-" + today)) {
+        const keyIsToday = key.endsWith("-" + String(today).padStart(2, "0"));
+        const keyIsTomorrow = key.endsWith("-" + String(+today + 1).padStart(2, "0"));
+        if (keyIsToday) {
           process.stdout.write("︙");
         } else {
           // process.stdout.write(' ');
         }
         if (i - map2[key] > 0 && i - map2[key] < 1) {
-            process.stdout.write(color)
+          process.stdout.write(color);
           process.stdout.write(minutesToString(map2[key]));
-            process.stdout.write(white)
+          process.stdout.write(white);
         } else {
           if (map2[key] > i) {
             process.stdout.write(color);
-            process.stdout.write("██" + white);
+            if (keyIsTomorrow) {
+              process.stdout.write("█" + white);
+            } else {
+              process.stdout.write("██" + white);
+            }
           } else {
-            process.stdout.write("  ");
+            if (keyIsTomorrow) {
+              process.stdout.write(" ");
+            } else {
+              process.stdout.write("  ");
+            }
           }
         }
       }
@@ -301,10 +334,10 @@ async function run() {
       process.stdout.write("\n");
     }
   }
-  for (let i = 0; i < 4 * totalDaysInMonth + 3; i++) {
+  for (let i = 0; i < 4 * totalDaysInMonth + 5; i++) {
     process.stdout.write("\u2588");
   }
-process.stdout.write("\n" + footer)
+  process.stdout.write("\n" + footer);
 
   // calculate averate daily hours
 }
