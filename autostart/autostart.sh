@@ -6,8 +6,8 @@ while true; do
 done &
 
 setxkbmap -layout us,ir -option grp:alt_shift_toggle &
-~/.fehbg &
-~/.bin/clockify-dashboard &
+# ~/.bin/clockify-dashboard &
+~/.bin/monitor &
 picom &
 dunst &
 xfce4-power-manager &
@@ -40,3 +40,4 @@ if [ -f "$usermodmap" ]; then
 fi
 
 exec /usr/local/bin/dwm
+open https://app.clockify.me/dashboard

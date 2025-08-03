@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+[[ -f "$HOME/.tokens" ]] && source "$HOME/.tokens"
+
+get_prompt() {
+    echo '>>>';
+    gum write \
+        --prompt="" \
+        --no-show-help \
+        --char-limit=0 
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+    --continue)
+        CONTINUE=true
+        shift # Remove --blah from processing
+        ;;
+    *)
+        echo "Unknown option: $1"
+        shift
+        ;;
+    esac
+done
+
+if [[ -z $CONTINUE ]]; then
+    first_prompt=$(get_prompt) && \
+        printf ">>>\n%s\n<<<\n" "$first_prompt" && \
+        llm <<< "$first_prompt" || \
+        exit
+else
+    llm --show-last
+fi
+
+while true; do
+    next_prompt=$(get_prompt) && \
+    printf ">>>\n%s\n<<<\n" "$next_prompt" && \
+    llm --continue-last <<< "$next_prompt" || \
+    break
+done

@@ -8,6 +8,8 @@ const API_KEY = process.env.CLOCKIFY_API_KEY;
 const WORKSPACE_ID = process.env.CLOCKIFY_WORKSPACE_ID;
 const USER_ID = process.env.CLOCKIFY_USER_ID;
 
+const CAD_TO_USD = 0.69
+
 function loadProjects() {
   const filePath = path.join(process.env.HOME, ".clockify_projects.json");
   if (!fs.existsSync(filePath)) {
@@ -93,7 +95,7 @@ async function run() {
     projectMap[project.id] = project.name;
   });
 
-  const desiredProjects = ["OCR", "yesvelte"]; // List your desired projects here
+  const desiredProjects = ["OCR", "CMS", "yesvelte"]; // List your desired projects here
   const desiredProjects2 = ["Crawler"];
   const dailyProjectData = {};
   const dailyProjectData2 = {};
@@ -171,27 +173,42 @@ async function run() {
   process.stdout.write("\n");
   const avg1 = timeToString(average1);
   const avg2 = timeToString(average2);
+  const rate1 = 12;
+  const rate2 = 10;
+  const monthlygoal = 1500;
 
-  const client1 = "Ubeac";
-  const client2 = "Armin";
+  const client1 = "Canada";
+  const client2 = "Iran";
+  let hours1 = Object.keys(dailyProjectData)
+    .map((x) => dailyProjectData[x])
+    .reduce((prev, curr) => prev + curr, 0)
+    .toFixed(0);
+  let hours2 = Object.keys(dailyProjectData2)
+    .map((x) => dailyProjectData2[x])
+    .reduce((prev, curr) => prev + curr, 0)
+    .toFixed(0);
+
   let message1 =
     " " +
     client1 +
     " (" +
-    Object.keys(dailyProjectData)
-      .map((x) => dailyProjectData[x])
-      .reduce((prev, curr) => prev + curr, 0)
-      .toFixed(0) +
-    " Hours)" +
+    hours1 +
+    ` Hours = $${(hours1 * rate1 * CAD_TO_USD).toFixed(2)})` +
     " Avg: (" +
     avg1 +
     ")";
 
-  const goal1 = 300;
-  const goal2 = 250;
+  const totalRatio = rate1 + rate2;
 
-  const end1 = "Goal (03:00) ";
-  const end2 = "Goal (02:30) ";
+  const dailygoal = monthlygoal / totalDaysInMonth;
+  const factor =
+    dailygoal / ((rate1 * rate1) / totalRatio + (rate2 * rate2) / totalRatio);
+
+  const goal1 = (rate1 * factor * 100) / totalRatio;
+  const goal2 = (rate2 * factor * 100) / totalRatio;
+
+  const end1 = `Goal (${timeToString(goal1 / 100)}) `;
+  const end2 = `Goal (${timeToString(goal2 / 100)}) `;
 
   const spaceCount1 = totalDaysInMonth * 2 - message1.length - end1.length;
   for (let item in Array.from({ length: spaceCount1 })) {
@@ -207,11 +224,8 @@ async function run() {
     " " +
     client2 +
     " (" +
-    Object.keys(dailyProjectData2)
-      .map((x) => dailyProjectData2[x])
-      .reduce((prev, curr) => prev + curr, 0)
-      .toFixed(0) +
-    " Hours)" +
+    hours2 +
+    ` Hours = $${(hours2 * rate2 * CAD_TO_USD).toFixed(2)})` +
     " Avg: (" +
     avg2 +
     ")";
@@ -234,20 +248,22 @@ async function run() {
       100) /
     (totalDaysInMonth - today);
 
-    const todayDateKey = moment(new Date())
-      .format("YYYY-MM-DD"); // Extract date in 'YYYY-MM-DD' format
+  const todayDateKey = moment(new Date()).format("YYYY-MM-DD"); // Extract date in 'YYYY-MM-DD' format
 
-let todayHours = (dailyProjectData[todayDateKey] ?? 0) + (dailyProjectData2[todayDateKey] ?? 0)
-
+  let todayHours =
+    (dailyProjectData[todayDateKey] ?? 0) +
+    (dailyProjectData2[todayDateKey] ?? 0);
 
   const messageFooter = `Should Work (${timeToString(
     (remainingHours + goal1 + goal2) / 100
   )}) Everyday`;
-    const footer = `Daily Goal: ${timeToString(
+  const footer = `Daily Goal: ${timeToString(
     (goal1 + goal2) / 100
   )} Current: ${timeToString(
     (totalHours + totalHours2) / today
-  )} | Today: (${timeToString(todayHours)} / ${timeToString(((remainingHours + goal1 + goal2) / 100 )- todayHours)}) | ${messageFooter}`;
+  )} | Today: (${timeToString(todayHours)} / ${timeToString(
+    (remainingHours + goal1 + goal2) / 100 - todayHours
+  )}) | ${messageFooter}`;
   for (let i = 9; i > 0; i--) {
     process.stdout.write(white);
 
@@ -270,7 +286,9 @@ let todayHours = (dailyProjectData[todayDateKey] ?? 0) + (dailyProjectData2[toda
         const today = new Date().getDate();
         const color = map[key] > goal1 / 100 ? green : red;
         const keyIsToday = key.endsWith("-" + String(today).padStart(2, "0"));
-        const keyIsTomorrow = key.endsWith("-" + String(+today + 1).padStart(2, "0"));
+        const keyIsTomorrow = key.endsWith(
+          "-" + String(+today + 1).padStart(2, "0")
+        );
         if (keyIsToday) {
           process.stdout.write("︙");
         } else {
@@ -303,7 +321,9 @@ let todayHours = (dailyProjectData[todayDateKey] ?? 0) + (dailyProjectData2[toda
         // 2.3 10x 9x 3(i - x) < 1
         const today = new Date().getDate();
         const keyIsToday = key.endsWith("-" + String(today).padStart(2, "0"));
-        const keyIsTomorrow = key.endsWith("-" + String(+today + 1).padStart(2, "0"));
+        const keyIsTomorrow = key.endsWith(
+          "-" + String(+today + 1).padStart(2, "0")
+        );
         if (keyIsToday) {
           process.stdout.write("︙");
         } else {

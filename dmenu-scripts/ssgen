@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # where to save (or look for) the script
-script_path="$HOME/.local/bin"
+script_path="$HOME/.bin"
 
 # the editor of your choice
-script_editor="geany"
+script_editor="st -e vim"
 
 # check for argument (script name)
 

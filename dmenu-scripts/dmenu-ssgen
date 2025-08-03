@@ -2,11 +2,11 @@
 
 # important! requires 'ssgen' script
 
-script_path="$HOME/.local/bin"
+script_path="$HOME/.bin"
 ssgen_path="$script_path"
 
 # dmenu theming
-. $HOME/.local/bin/dmenu-theming
+. $HOME/.bin/dmenu-theming
 
 prompt="-p Script:"
 

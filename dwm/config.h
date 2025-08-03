@@ -72,7 +72,7 @@ static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
 // -A 0.7
 static const char *quakecmd[]  = { "st", "-c", "quake", "-e", "tmux", NULL };
 static const char *screenshot[]  = { "flameshot", "gui", NULL };
-static const char *browsercmd[]  = { "google-chrome", NULL };
+static const char *browsercmd[]  = { "google-chrome", "--profile-directory=Default", NULL };
 static const char *logoutcmd[]  = { "/home/hadi/.bin/dm-logout", NULL };
 static const char *killcmd[]  = { "/home/hadi/.bin/dmenu-kill-process", NULL };
 static const char *amscmd[]  = { "/home/hadi/.bin/ai-model-switch", NULL };

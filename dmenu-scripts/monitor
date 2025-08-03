@@ -1,0 +1,10 @@
+#!/bin/sh
+sleep 2s
+xrandr --output eDP1 --primary --mode 1366x768 --pos 2560x672 --rotate normal --output DP1 --off --output HDMI1 --mode 2560x1440 --pos 0x0 --rotate normal --output HDMI2 --off --output VIRTUAL1 --off
+
+message=`node /home/hadi/github/me/dotfiles/dynamic-wallpaper/index.js`;
+feh --no-fehbg --bg-scale '/home/hadi/clockify-bg.png' 
+
+notify-send "Work report:" "$message"
+exec chatgpt &
+exec tracker &

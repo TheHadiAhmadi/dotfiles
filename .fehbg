@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --no-fehbg --bg-fill '/home/hadi/Downloads/bg.jpg'
+feh --no-fehbg --bg-scale '/home/hadi/clockify-bg.png' 
